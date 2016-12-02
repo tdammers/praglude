@@ -43,6 +43,7 @@ packages:
 extra-deps:
 - casing-0.1.0.1
 - string-convert-3.0.1
+- semigroups-0.18.2
 
 # Override default flag values for local packages and extra-deps
 flags: {}

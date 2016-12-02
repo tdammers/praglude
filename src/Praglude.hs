@@ -191,7 +191,7 @@ import Prelude hiding ( putStr
                       , length
                       )
 import qualified Prelude
-import System.FilePath hiding ( (<.>) )
+import System.FilePath hiding ( (<.>), isValid )
 import System.Directory
 import qualified System.IO as IO
 import System.IO (stderr, stdout, stdin, Handle)
