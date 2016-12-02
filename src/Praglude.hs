@@ -98,6 +98,7 @@ module Praglude
 
 , module Data.Foldable
 
+, AList (..)
 , HashMap
 , LHashMap
 , HashSet
@@ -363,6 +364,12 @@ class Lookup m k | m -> k where
     lookupDef :: v -> k -> m v -> v
     lookupDef d k = fromMaybe d . lookup k
 
+newtype AList k v = AList { unAList :: [(k, v)] }
+    deriving (Show, Read, Eq, Ord, Generic, Functor)
+
+instance Eq k => Lookup (AList k) k where
+    lookup k = Prelude.lookup k . unAList
+
 class ListLike m a | m -> a where
     intersperse :: a -> m -> m
     take :: Int -> m -> m
@@ -467,6 +474,18 @@ class DictLike m k where
     singletonMap :: k -> v -> m k v
     -- | Test whether the dictionary contains a given key
     member :: k -> m k v -> Bool
+
+    keys = map fst . pairs
+    elems = map snd . pairs
+
+instance Eq k => DictLike AList k where
+    insert k v (AList xs) = AList $ (k,v):xs
+    delete k (AList xs) = AList $ filter ((/= k) . fst) xs
+    update k f (AList xs) = AList [ (k, fromMaybe v $ f v) | (k, v) <- xs ]
+    pairs = unAList
+    fromPairs = AList
+    singletonMap k v = AList [(k, v)]
+    member k = not . null . filter (== k) . keys
 
 instance Lookup [] Int where
     lookup i xs = case drop i xs of
