@@ -21,6 +21,9 @@ module Praglude
 -- * Maybe
 , module Data.Maybe
 
+-- * Applicative
+, (<|>)
+
 -- * Monads
 , module Control.Monad
 
@@ -198,6 +201,7 @@ import qualified System.IO as IO
 import System.IO (stderr, stdout, stdin, Handle)
 import Data.Maybe
 import Control.Monad
+import Control.Applicative hiding ( empty )
 import Text.Printf
 import Data.Monoid
 import Data.Char
