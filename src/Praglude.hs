@@ -117,6 +117,8 @@ module Praglude
 , Filterable (..)
 , cull
 , startsWith
+, endsWith
+, intercalate
 
 -- * JSON
 , ToJSON (..)
@@ -235,7 +237,7 @@ import Data.Hashable (Hashable (..))
 import Text.StringConvert
 import Data.Typeable
 import GHC.Generics
-import GHC.Exts
+import GHC.Exts hiding (toList)
 import Data.Data
 import Data.Semigroup
 import Control.DeepSeq
@@ -418,6 +420,9 @@ startsWith haystack needle =
 endsWith :: (Eq a, ListLike a e) => a -> a -> Bool
 endsWith haystack needle =
     takeEnd (length needle) haystack == needle
+
+intercalate :: (Monoid a, Foldable m, ListLike (m a) a) => a -> m a -> a
+intercalate s = mconcat . toList . intersperse s
 
 -- | Things that behave like sets.
 class SetLike m v | m -> v where
