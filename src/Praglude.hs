@@ -1005,8 +1005,105 @@ module Praglude
 , IsChar(..)
 
 -- * Filename And File System Manipulation
-, module System.FilePath
-, module System.Directory
+-- ** 'System.FilePath'
+, (</>)
+, FilePath
+, addExtension
+, addTrailingPathSeparator
+, combine
+, dropDrive
+, dropExtension
+, dropExtensions
+, dropFileName
+, dropTrailingPathSeparator
+, equalFilePath
+, extSeparator
+, getSearchPath
+, hasDrive
+, hasExtension
+, hasTrailingPathSeparator
+, isAbsolute
+, isDrive
+, isExtSeparator
+, isPathSeparator
+, isRelative
+, isSearchPathSeparator
+, joinDrive
+, joinPath
+, makeRelative
+, makeValid
+, normalise
+, pathSeparator
+, pathSeparators
+, replaceBaseName
+, replaceDirectory
+, replaceExtension
+, replaceExtensions
+, replaceFileName
+, searchPathSeparator
+, splitDirectories
+, splitDrive
+, splitExtension
+, splitExtensions
+, splitFileName
+, splitPath
+, splitSearchPath
+, stripExtension
+, takeBaseName
+, takeDirectory
+, takeDrive
+, takeExtension
+, takeExtensions
+, takeFileName
+
+-- ** module System.Directory
+, Permissions (..)
+, XdgDirectory (..)
+, canonicalizePath
+, copyFile
+, copyFileWithMetadata
+, copyPermissions
+, createDirectory
+, createDirectoryIfMissing
+, doesDirectoryExist
+, doesFileExist
+, emptyPermissions
+, findExecutable
+, findExecutables
+, findExecutablesInDirectories
+, findFile
+, findFileWith
+, findFiles
+, findFilesWith
+, getAccessTime
+, getAppUserDataDirectory
+, getCurrentDirectory
+, getDirectoryContents
+, getHomeDirectory
+, getModificationTime
+, getPermissions
+, getTemporaryDirectory
+, getUserDocumentsDirectory
+, getXdgDirectory
+, isSymbolicLink
+, listDirectory
+, makeAbsolute
+, makeRelativeToCurrentDirectory
+, removeDirectory
+, removeDirectoryRecursive
+, removeFile
+, renameDirectory
+, renameFile
+, setAccessTime
+, setCurrentDirectory
+, setModificationTime
+, setOwnerExecutable
+, setOwnerReadable
+, setOwnerSearchable
+, setOwnerWritable
+, setPermissions
+, withCurrentDirectory
+, exeExtension
 
 -- * Type Forcers
 --
@@ -1020,7 +1117,38 @@ module Praglude
 
 -- * Container Types With Unified Interfaces
 
-, module Data.Foldable
+, Foldable(..)
+
+-- ** Special biased folds
+, foldrM
+, foldlM
+
+-- ** Folding actions
+-- *** Applicative actions
+, traverse_
+, for_
+, sequenceA_
+, asum
+
+-- *** Monadic actions
+, mapM_
+, forM_
+, sequence_
+, msum
+
+-- ** Specialized folds
+, concat
+, concatMap
+, and
+, or
+, any
+, all
+, maximumBy
+, minimumBy
+
+-- ** Searches
+, notElem
+, find
 
 , AList (..)
 , HashMap
