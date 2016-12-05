@@ -13,36 +13,892 @@ module Praglude
   module Prelude
 
 -- * Monoids
-, module Data.Monoid
+, Monoid (..)
+, (<>)
+, Dual (..)
+, Endo (..)
+, All (..)
+, Any (..)
+, Sum (..)
+, Product (..)
+, First (..)
+, Alt (..)
 , concat
 , append
 , empty
 
 -- * Maybe
-, module Data.Maybe
+-- (from 'Data.Maybe')
+, Maybe(Nothing, Just)
+, maybe
+, isJust
+, isNothing
+, fromJust
+, fromMaybe
+, listToMaybe
+, maybeToList
+, catMaybes
+, mapMaybe
 
 -- * Applicative
 , (<|>)
 
 -- * Monads
-, module Control.Monad
+-- (from 'Control.Monad')
+, Monad ((>>=), (>>), return, fail)
+, MonadPlus(mzero, mplus)
+, mapM
+, mapM_
+, forM
+, forM_
+, sequence
+, sequence_
+, (=<<)
+, (>=>)
+, (<=<)
+, forever
+, void
+, join
+, msum
+, mfilter
+, filterM
+, mapAndUnzipM
+, zipWithM
+, zipWithM_
+, foldM
+, foldM_
+, replicateM
+, replicateM_
+, guard
+, when
+, unless
+, liftM
+, liftM2
+, liftM3
+, liftM4
+, liftM5
+, ap
+, (<$!>)
 
 -- * Arrows
-, module Control.Arrow
+, Arrow (..)
+, Kleisli (..)
+, returnA
+, (^>>)
+, (>>^)
+, (>>>)
+, (<<<)
+, (<<^)
+, (^<<)
+, ArrowZero (..)
+, ArrowPlus (..)
+, ArrowChoice (..)
+, ArrowApply (..)
+, ArrowMonad (..)
+, leftApp
+, ArrowLoop (..)
+, left
+, right
+, (+++)
+, (|||)
 
 -- * Mutable Variables In IO
-, module Data.IORef
-, module Control.Concurrent.MVar
-, module Control.Concurrent.Chan
+-- ** 'Data.IORef'
+, IORef
+, newIORef
+, readIORef
+, writeIORef
+, modifyIORef
+, modifyIORef'
+, atomicModifyIORef
+, atomicModifyIORef'
+, atomicWriteIORef
+, mkWeakIORef
+
+-- ** 'Control.Concurrent.MVar'
+, MVar
+, newEmptyMVar
+, newMVar
+, takeMVar
+, putMVar
+, readMVar
+, swapMVar
+, tryTakeMVar
+, tryPutMVar
+, isEmptyMVar
+, withMVar
+, withMVarMasked
+, modifyMVar_
+, modifyMVar
+, modifyMVarMasked_
+, modifyMVarMasked
+, tryReadMVar
+, mkWeakMVar
+, addMVarFinalizer
+
+-- ** 'Control.Concurrent.Chan'
+, Chan
+, newChan
+, writeChan
+, readChan
+, dupChan
+, getChanContents
+, writeList2Chan
+
 
 -- * Default
-, module Data.Default
+, Default (def)
 
 -- * Lens
-, module Control.Lens
+, (#)
+, (#%%=)
+, (#%%~)
+, (#%=)
+, (#%~)
+, (#=)
+, (#~)
+, (%%=)
+, (%%@=)
+, (%%@~)
+, (%%~)
+, (%=)
+, (%@=)
+, (%@~)
+, (%~)
+, (&)
+, (&&=)
+, (&&~)
+, (&~)
+, (**=)
+, (**~)
+, (*=)
+, (*~)
+, (+=)
+, (+~)
+, (-=)
+, (-~)
+, (...)
+, (.=)
+, (.>)
+, (.@=)
+, (.@~)
+, (.~)
+, (//=)
+, (//~)
+, (<#%=)
+, (<#%~)
+, (<#=)
+, (<#~)
+, (<%=)
+, (<%@=)
+, (<%@~)
+, (<%~)
+, (<&&=)
+, (<&&~)
+, (<&>)
+, (<**=)
+, (<**~)
+, (<*=)
+, (<*~)
+, (<+=)
+, (<+~)
+, (<-=)
+, (<-~)
+, (<.)
+, (<.=)
+, (<.>)
+, (<.~)
+, (<//=)
+, (<//~)
+, (<<%=)
+, (<<%@=)
+, (<<%@~)
+, (<<%~)
+, (<<&&=)
+, (<<&&~)
+, (<<**=)
+, (<<**~)
+, (<<*=)
+, (<<*~)
+, (<<+=)
+, (<<+~)
+, (<<-=)
+, (<<-~)
+, (<<.=)
+, (<<.~)
+, (<<//=)
+, (<<//~)
+, (<<<>=)
+, (<<<>~)
+, (<<>=)
+, (<<>~)
+, (<<^=)
+, (<<^^=)
+, (<<^^~)
+, (<<^~)
+, (<<||=)
+, (<<||~)
+, (<<~)
+, (<>=)
+, (<>~)
+, (<?=)
+, (<?~)
+, (<^=)
+, (<^^=)
+, (<^^~)
+, (<^~)
+, (<|)
+, (<||=)
+, (<||~)
+, (<~)
+, (?=)
+, (??)
+, (?~)
+, ALens (..)
+, ALens' (..)
+, APrism (..)
+, APrism' (..)
+, AReview (..)
+, ASetter (..)
+, ASetter' (..)
+, ATraversal (..)
+, ATraversal' (..)
+, ATraversal1 (..)
+, ATraversal1' (..)
+, Accessing (..)
+, AnEquality (..)
+, AnEquality' (..)
+, AnIndexedLens (..)
+, AnIndexedLens' (..)
+, AnIndexedSetter (..)
+, AnIndexedSetter' (..)
+, AnIndexedTraversal (..)
+, AnIndexedTraversal' (..)
+, AnIndexedTraversal1 (..)
+, AnIndexedTraversal1' (..)
+, AnIso (..)
+, AnIso' (..)
+, As (..)
+, AsEmpty (..)
+, Ixed (..)
+, Bazaar (..)
+, Bazaar' (..)
+, Bazaar1 (..)
+, Bazaar1 (..)
+, Bazaar1' (..)
+, Bifunctor (..)
+, Profunctor (..)
+, ClassyNamer
+, Cons (..)
+, Const (..)
+, Const (..)
+, Contains (..)
+, Context (..)
+, Context' (..)
+, Contravariant (..)
+, DefName
+, Each (..)
+, Equality (..)
+, Equality' (..)
+, Field1 (..)
+, Field2 (..)
+, Field3 (..)
+, Field4 (..)
+, Field5 (..)
+, Field6 (..)
+, Field7 (..)
+, Field8 (..)
+, Field9 (..)
+, FieldNamer
+, Fold (..)
+, Fold1 (..)
+, Foldable (..)
+, Functor (..)
+, GPlated (..)
+, Getter (..)
+, Getting (..)
+, Identical (..)
+, Identical (..)
+, Identity (..)
+, Index (..)
+, IndexPreservingFold (..)
+, IndexPreservingFold1 (..)
+, IndexPreservingGetter (..)
+, IndexPreservingLens (..)
+, IndexPreservingLens' (..)
+, IndexPreservingSetter (..)
+, IndexPreservingSetter' (..)
+, IndexPreservingTraversal (..)
+, IndexPreservingTraversal' (..)
+, IndexPreservingTraversal1 (..)
+, IndexPreservingTraversal1' (..)
+, Conjoined (..)
+, Indexed (..)
+, IndexedFold (..)
+, IndexedFold1 (..)
+, IndexedGetter (..)
+, IndexedGetting (..)
+, IndexedLens (..)
+, IndexedLens' (..)
+, IndexedLensLike (..)
+, IndexedLensLike' (..)
+, IndexedSetter (..)
+, IndexedSetter' (..)
+, IndexedTraversal  (..)
+, IndexedTraversal'  (..)
+, IndexedTraversal1  (..)
+, IndexedTraversal1'  (..)
+, Iso  (..)
+, Iso'  (..)
+, IxValue  (..)
+, Ixed  (..)
+, Leftmost  (..)
+, Lens  (..)
+, Lens'  (..)
+, LensLike  (..)
+, LensLike'  (..)
+, LensRules
+, Level  (..)
+, Magma  (..)
+, Magnified  (..)
+, Optic  (..)
+, Optic'  (..)
+, Optical  (..)
+, Optical'  (..)
+, Over  (..)
+, Over'  (..)
+, Plated  (..)
+, Prism  (..)
+, Prism'  (..)
+, Profunctor  (..)
+, ReifiedFold  (..)
+, ReifiedFold  (..)
+, ReifiedGetter  (..)
+, ReifiedGetter  (..)
+, ReifiedIndexedFold  (..)
+, ReifiedIndexedFold  (..)
+, ReifiedIndexedGetter  (..)
+, ReifiedIndexedGetter  (..)
+, ReifiedIndexedLens  (..)
+, ReifiedIndexedLens  (..)
+, ReifiedIndexedLens'  (..)
+, ReifiedIndexedSetter  (..)
+, ReifiedIndexedSetter  (..)
+, ReifiedIndexedSetter'  (..)
+, ReifiedIndexedTraversal  (..)
+, ReifiedIndexedTraversal  (..)
+, ReifiedIndexedTraversal'  (..)
+, ReifiedIso  (..)
+, ReifiedIso  (..)
+, ReifiedIso'  (..)
+, ReifiedLens  (..)
+, ReifiedLens  (..)
+, ReifiedLens'  (..)
+, ReifiedPrism  (..)
+, ReifiedPrism  (..)
+, ReifiedPrism'  (..)
+, ReifiedSetter  (..)
+, ReifiedSetter  (..)
+, ReifiedSetter'  (..)
+, ReifiedTraversal  (..)
+, ReifiedTraversal  (..)
+, ReifiedTraversal'  (..)
+, Reversing  (..)
+, Review  (..)
+, Wrapped  (..)
+, Rightmost  (..)
+, Sequenced  (..)
+, Sequenced  (..)
+, Setter  (..)
+, Setter'  (..)
+, Setting  (..)
+, Setting'  (..)
+, Simple  (..)
+, Snoc  (..)
+, Strict
+, Strict  (..)
+, Swapped
+, Bifunctor  (..)
+, Traversal  (..)
+, Traversal'  (..)
+, Traversal1  (..)
+, Traversal1'  (..)
+, Ord  (..)
+, Ord  (..)
+, Traversed  (..)
+, Traversed  (..)
+, Traversing  (..)
+, Traversing'  (..)
+, Traversing1  (..)
+, Traversing1'  (..)
+, Unwrapped
+, Wrapped
+, Wrapped  (..)
+, Zoomed  (..)
+, (^#)
+, (^.)
+, (^..)
+, (^=)
+, (^?)
+, (^?!)
+, (^@.)
+, (^@..)
+, (^@?)
+, (^@?!)
+, (^^=)
+, (^^~)
+, (^~)
+, _1'
+, _2'
+, _3'
+, _4'
+, _5'
+, _6'
+, _7'
+, _8'
+, _9'
+, _Just
+, _Left
+, _Nothing
+, _Right
+, _Show
+, _Unwrapped
+, _Unwrapped'
+, _Unwrapping
+, _Unwrapping'
+, _Void
+, _Wrapped
+, _Wrapping
+, _Wrapping'
+, _head
+, _init
+, _last
+, _tail
+, abbreviatedFields
+, abbreviatedNamer
+, ala
+, alaf
+, allOf
+, alongside
+, andOf
+, anon
+, anyOf
+, argument
+, asIndex
+, aside
+, assign
+, assignA
+, asumOf
+, au
+, auf
+, backwards
+, below
+, beside
+, bimapping
+, both
+, camelCaseFields
+, camelCaseNamer
+, censoring
+, children
+, choosing
+, chosen
+, classyRules
+, classyRules_
+, cloneIndexPreservingLens
+, cloneIndexPreservingSetter
+, cloneIndexPreservingTraversal
+, cloneIndexPreservingTraversal1
+, cloneIndexedLens
+, cloneIndexedSetter
+, cloneIndexedTraversal
+, cloneIndexedTraversal1
+, cloneIso
+, cloneLens
+, clonePrism
+, cloneSetter
+, cloneTraversal
+, cloneTraversal1
+, coerced
+, composOpFold
+, concatMapOf
+, concatOf
+, confusing
+, cons
+, contexts
+, contextsOf
+, contextsOn
+, contextsOnOf
+, contramapped
+, contramapping
+, cosmos
+, cosmosOf
+, cosmosOn
+, cosmosOnOf
+, createClass
+, curried
+, cycled
+, declareClassy
+, declareClassyFor
+, declareFields
+, declareLenses
+, declareLensesFor
+, declareLensesWith
+, declarePrisms
+, declareWrapped
+, deep
+, deepOf
+, defaultFieldRules
+, devoid
+, dimapping
+, dropping
+, droppingWhile
+, elemIndexOf
+, elemIndicesOf
+, elemOf
+, element
+, elementOf
+, elements
+, elementsOf
+, enum
+, failing
+, failover
+, filtered
+, findIndexOf
+, findIndicesOf
+, findMOf
+, findOf
+, firstOf
+, firsting
+, flipped
+, foldBy
+, foldByOf
+, foldMapBy
+, foldMapByOf
+, foldMapOf
+, foldOf
+, folded
+, folded64
+, folding
+, foldl1Of
+, foldl1Of'
+, foldlMOf
+, foldlOf
+, foldlOf'
+, foldr1Of
+, foldr1Of'
+, foldrMOf
+, foldrOf
+, foldrOf'
+, foldring
+, forMOf
+, forMOf_
+, forOf
+, forOf_
+, Control.Lens.from
+, fromEq
+, fusing
+, generateLazyPatterns
+, generateSignatures
+, generateUpdateableOptics
+, getting
+, gplate
+, has
+, hasn't
+, holes
+, holesOf
+, holesOn
+, holesOnOf
+, iall
+, iallOf
+, iany
+, ianyOf
+, iat
+, icensoring
+, icompose
+, iconcatMap
+, iconcatMapOf
+, icontains
+, idroppingWhile
+, ifailover
+, ifiltered
+, ifind
+, ifindMOf
+, ifindOf
+, ifoldMapBy
+, ifoldMapByOf
+, ifoldMapOf
+, ifolding
+, ifoldlM
+, ifoldlMOf
+, ifoldlOf
+, ifoldlOf'
+, ifoldrM
+, ifoldrMOf
+, ifoldrOf
+, ifoldrOf'
+, ifoldring
+, ifor
+, iforM
+, iforMOf
+, iforMOf_
+, iforM_
+, iforOf
+, iforOf_
+, ifor_
+, ignored
+, iix
+, ilens
+, ilevels
+, ilike
+, ilistening
+, ilistenings
+, iloci
+, imagma
+, imapAccumL
+, imapAccumLOf
+, imapAccumR
+, imapAccumROf
+, imapM
+, imapMOf
+, imapMOf_
+, imapM_
+, imapOf
+, imodifying
+, index
+, indexing
+, indexing64
+, indices
+, inone
+, inoneOf
+, inside
+, involuted
+, iover
+, ipartsOf
+, ipartsOf'
+, ipassing
+, iplens
+, ipre
+, ipreuse
+, ipreuses
+, ipreview
+, ipreviews
+, iset
+, isets
+, isn't
+, iso
+, itakingWhile
+, iterated
+, ito
+, itoList
+, itoListOf
+, itraverseBy
+, itraverseByOf
+, itraverseOf
+, itraverseOf_
+, itraverse_
+, iunsafePartsOf
+, iunsafePartsOf'
+, iuse
+, iuses
+, iview
+, iviews
+, ixAt
+, lastOf
+, Control.Lens.lazy
+, lengthOf
+, lens
+, lensClass
+, lensField
+, lensRules
+, lensRulesFor
+, levels
+, lifted
+, like
+, lined
+, listening
+, listenings
+, lmapping
+, loci
+, locus
+, lookingupNamer
+, lookupOf
+, magma
+, makeClassy
+, makeClassyFor
+, makeClassyPrisms
+, makeClassy_
+, makeFields
+, makeLenses
+, makeLensesFor
+, makeLensesWith
+, makePrisms
+, makeWrapped
+, mapAccumLOf
+, mapAccumROf
+, mapEq
+, mapMOf
+, mapMOf_
+, mapOf
+, mapped
+, mapping
+, mappingNamer
+, matching
+, maximumByOf
+, maximumOf
+, minimumByOf
+, minimumOf
+, modifying
+, msumOf
+, nearly
+, non
+, non'
+, none
+, noneOf
+, notElemOf
+, notNullOf
+, nullOf
+, only
+, op
+, orOf
+, outside
+, over
+, overA
+, para
+, paraOf
+, parts
+, partsOf
+, partsOf'
+, passing
+, pre
+, preuse
+, preuses
+, preview
+, previews
+, prism
+, prism'
+, productOf
+, re
+, reindexed
+, repeated
+, replicated
+, retagged
+, reuse
+, reuses
+, reversed
+, review
+, reviews
+, rewrite
+, rewriteM
+, rewriteMOf
+, rewriteMOn
+, rewriteMOnOf
+, rewriteOf
+, rewriteOn
+, rewriteOnOf
+, rmapping
+, runEq
+, sans
+, scanl1Of
+, scanr1Of
+, scribe
+, seconding
+, selfIndex
+, sequenceAOf
+, sequenceAOf_
+, sequenceBy
+, sequenceByOf
+, sequenceOf
+, sequenceOf_
+, set
+, set'
+, sets
+, setting
+, simple
+, simpleLenses
+, simply
+, singular
+, snoc
+, storing
+, substEq
+, sumOf
+, taking
+, takingWhile
+, Control.Lens.to
+, toListOf
+, transform
+, transformM
+, transformMOf
+, transformMOn
+, transformMOnOf
+, transformOf
+, transformOn
+, transformOnOf
+, transposeOf
+, traverseBy
+, traverseByOf
+, traverseOf
+, traverseOf_
+, traversed
+, traversed1
+, traversed64
+, un
+, uncons
+, uncurried
+, under
+, underscoreFields
+, underscoreNamer
+, underscoreNoPrefixNamer
+, unfolded
+, united
+, universe
+, universeOf
+, universeOn
+, universeOnOf
+, unsafePartsOf
+, unsafePartsOf'
+, unsafeSingular
+, unsnoc
+, unto
+, use
+, uses
+, view
+, views
+, withIndex
+, withIso
+, withPrism
+, without
+, worded
+, (|>)
+, (||=)
+, (||~)
 
 -- * State monads
-, module Control.Monad.State
+-- ** 'Control.Monad.Trans.Class'
+, MonadTrans (..)
+
+-- ** 'Control.Monad.IO.Class'
+, MonadIO (..)
+
+-- ** 'Control.Monad.State'
+, MonadState(..)
+, modify
+, modify'
+, gets
+
+, State
+, runState
+, evalState
+, execState
+, mapState
+, withState
+
+, StateT(StateT)
+, runStateT
+, evalStateT
+, execStateT
+, mapStateT
+, withStateT
+
 
 -- * Painless String Types
 , s
@@ -63,7 +919,39 @@ module Praglude
 , words
 , lines
 
-, module Data.Char
+, Char
+, isControl
+, isSpace
+, isLower
+, isUpper
+, isAlpha
+, isAlphaNum
+, isPrint
+, isDigit
+, isOctDigit
+, isHexDigit
+, isLetter
+, isMark
+, isNumber
+, isPunctuation
+, isSymbol
+, isSeparator
+, isAscii
+, isLatin1
+, isAsciiUpper
+, isAsciiLower
+, GeneralCategory(..)
+, generalCategory
+, toUpper
+, toLower
+, toTitle
+, digitToInt
+, intToDigit
+, ord
+, chr
+, showLitChar
+, lexLitChar
+, readLitChar
 
 -- * String Case Conversions
 , kebab, snake, pascal
@@ -75,13 +963,46 @@ module Praglude
 , Handle
 
 -- * Environment
-, module System.Environment
+-- 'System.Environment'
+, getArgs
+, getProgName
+, getExecutablePath
+, getEnv
+, lookupEnv
+, setEnv
+, unsetEnv
+, withArgs
+, withProgName
+, getEnvironment
 
 -- * Generalized I/O
 , StringIO (..)
 
 -- * Printf
-, module Text.Printf
+-- ** 'Text.Printf'
+, printf
+, hPrintf
+, PrintfArg(..)
+, FieldFormatter
+, FieldFormat(..)
+, FormatAdjustment(..)
+, FormatSign(..)
+, vFmt
+, ModifierParser
+, FormatParse(..)
+, formatString
+, formatChar
+, formatInt
+, formatInteger
+, formatRealFloat
+, errorBadFormat
+, errorShortFormat
+, errorMissingArgument
+, errorBadArgument
+, perror
+, PrintfType
+, HPrintfType
+, IsChar(..)
 
 -- * Filename And File System Manipulation
 , module System.FilePath
@@ -153,7 +1074,14 @@ module Praglude
 
 -- * Functions
 , chain
-, module Data.Function
+, id
+, const
+, (.)
+, flip
+, ($)
+, (&)
+, fix
+, on
 
 -- * Date and Time
 , Day (..)
@@ -205,9 +1133,9 @@ import Data.Maybe
 import Control.Monad
 import Control.Applicative hiding ( empty )
 import Text.Printf
-import Data.Monoid
+import Data.Monoid hiding ( (<>), Any, First )
 import Data.Char
-import Control.Arrow (left, right, (+++), (|||))
+import Control.Arrow
 import Data.Foldable hiding (null, elem, concat, length)
 import System.Environment
 import Control.Concurrent.MVar
@@ -237,7 +1165,7 @@ import Data.Hashable (Hashable (..))
 import Text.StringConvert
 import Data.Typeable
 import GHC.Generics
-import GHC.Exts hiding (toList)
+import GHC.Exts hiding (toList, Any)
 import Data.Data
 import Data.Semigroup
 import Control.DeepSeq
@@ -384,42 +1312,42 @@ class ListLike m a | m -> a where
     dropEnd :: Int -> m -> m
     slice :: Int -> Int -> m -> m
     slice offset len = take len . drop offset
-    length :: m -> Int
-    takeEnd n x = drop (length x - n) x
-    dropEnd n x = take (length x - n) x
+    listLength :: m -> Int
+    takeEnd n x = drop (listLength x - n) x
+    dropEnd n x = take (listLength x - n) x
 
 instance ListLike [a] a where
     intersperse = List.intersperse
     take = List.take
     drop = List.drop
-    length = List.length
+    listLength = List.length
 
 instance ListLike (Vector a) a where
     intersperse e = Vector.fromList . List.intersperse e . Vector.toList
     take = Vector.take
     drop = Vector.drop
     slice = Vector.slice
-    length = Vector.length
+    listLength = Vector.length
 
 instance ListLike Text Char where
     intersperse = Text.intersperse
     take = Text.take . fromIntegral
     drop = Text.drop . fromIntegral
-    length = fromIntegral . Text.length
+    listLength = fromIntegral . Text.length
 
 instance ListLike LText Char where
     intersperse = LText.intersperse
     take = LText.take . fromIntegral
     drop = LText.drop . fromIntegral
-    length = fromIntegral . LText.length
+    listLength = fromIntegral . LText.length
 
 startsWith :: (Eq a, ListLike a e) => a -> a -> Bool
 startsWith haystack needle =
-    take (length needle) haystack == needle
+    take (listLength needle) haystack == needle
 
 endsWith :: (Eq a, ListLike a e) => a -> a -> Bool
 endsWith haystack needle =
-    takeEnd (length needle) haystack == needle
+    takeEnd (listLength needle) haystack == needle
 
 intercalate :: (Monoid a, Foldable m, ListLike (m a) a) => a -> m a -> a
 intercalate s = mconcat . toList . intersperse s
@@ -433,11 +1361,8 @@ class SetLike m v | m -> v where
     -- | Remove all occurrences of the element from the set.
     remove :: v -> m -> m
 
-    -- | Test if the element is in the set.
-    elem :: v -> m -> Bool
-
     -- | Test if the set is empty.
-    null :: m -> Bool
+    nullSet :: m -> Bool
 
     -- | Convert the set to a list of elements. The ordering is unspecified.
     items :: m -> [v]
@@ -453,7 +1378,7 @@ class SetLike m v | m -> v where
     size :: m -> Int
 
     size = List.length . items
-    null = List.null . items
+    nullSet = List.null . items
 
 -- | Things that can be filtered
 class Filterable m where
@@ -494,7 +1419,7 @@ instance Eq k => DictLike AList k where
     pairs = unAList
     fromPairs = AList
     singletonMap k v = AList [(k, v)]
-    member k = not . null . filter (== k) . keys
+    member k = not . nullSet . filter (== k) . keys
 
 instance Lookup [] Int where
     lookup i xs = case drop i xs of
@@ -507,8 +1432,7 @@ instance Lookup Vector Int where
 instance (Eq a) => SetLike (Vector a) a where
     conj = Vector.cons
     remove x = Vector.filter (/= x)
-    elem = Vector.elem
-    null = Vector.null
+    nullSet = Vector.null
     items = Vector.toList
     fromItems = Vector.fromList
     singleton = Vector.singleton
@@ -520,8 +1444,7 @@ instance Filterable Vector where
 instance (Eq a) => SetLike [a] a where
     conj = (:)
     remove x = filter (/= x)
-    elem = List.elem
-    null = List.null
+    nullSet = List.null
     items = id
     fromItems = id
     singleton = (:[])
@@ -533,8 +1456,7 @@ instance Filterable [] where
 instance (Eq v, Hashable v) => SetLike (HashSet v) v where
     conj = HashSet.insert
     remove = HashSet.delete
-    elem = HashSet.member
-    null = HashSet.null
+    nullSet = HashSet.null
     items = HashSet.toList
     fromItems = HashSet.fromList
     singleton = HashSet.singleton
@@ -546,8 +1468,7 @@ instance Filterable HashSet where
 instance (Eq v, Ord v) => SetLike (Set v) v where
     conj = Set.insert
     remove = Set.delete
-    elem = Set.member
-    null = Set.null
+    nullSet = Set.null
     items = Set.toList
     fromItems = Set.fromList
     singleton = Set.singleton
@@ -573,8 +1494,7 @@ instance (Eq k, Hashable k) => DictLike HashMap.HashMap k where
 instance (Eq k, Hashable k) => SetLike (HashMap k v) (k, v) where
     conj = uncurry insert
     remove = delete . fst
-    elem = member . fst
-    null = HashMap.null
+    nullSet = HashMap.null
     items = pairs
     fromItems = fromPairs
     singleton = uncurry singletonMap
@@ -599,8 +1519,7 @@ instance (Eq k, Ord k) => DictLike Map.Map k where
 instance (Eq k, Ord k) => SetLike (Map k v) (k, v) where
     conj = uncurry insert
     remove = delete . fst
-    elem = member . fst
-    null = Map.null
+    nullSet = Map.null
     items = pairs
     fromItems = fromPairs
     singleton = uncurry singletonMap
@@ -628,8 +1547,7 @@ instance (Eq k, Hashable k) => Lookup (LHashMap k) k where
 instance (Eq k, Hashable k) => SetLike (LHashMap k v) (k, v) where
     conj = uncurry insert
     remove = delete . fst
-    elem = member . fst
-    null = LHashMap.null . unLHashMap
+    nullSet = LHashMap.null . unLHashMap
     items = pairs
     fromItems = fromPairs
     singleton = uncurry singletonMap
