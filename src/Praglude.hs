@@ -1189,6 +1189,7 @@ module Praglude
 , decodeBase64
 
 -- * Concurrency And Exception Handling
+, Exception (..)
 , threadDelay
 , forkIO
 , bracket
