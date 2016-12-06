@@ -15,7 +15,7 @@
 # resolver:
 #  name: custom-snapshot
 #  location: "./custom-snapshot.yaml"
-resolver: lts-7.11
+resolver: lts-7.12
 
 # User packages to be built.
 # Various formats can be used as shown in the example below.
@@ -43,7 +43,6 @@ packages:
 extra-deps:
 - casing-0.1.0.1
 - string-convert-3.0.1
-- semigroups-0.18.2
 
 # Override default flag values for local packages and extra-deps
 flags: {}

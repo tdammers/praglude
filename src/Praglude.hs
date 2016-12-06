@@ -1305,7 +1305,6 @@ import Data.Aeson.TH (deriveJSON)
 import qualified Data.Aeson as JSON
 import qualified Data.Aeson.TH as JSON
 import Data.Default
-import Data.List (foldl')
 import Control.Concurrent
 import Control.Exception
 import Data.Function
@@ -1357,7 +1356,7 @@ type HashMap = HashMap.HashMap
 -- we can tie laziness into the type itself (similar to how it works
 -- for 'Text' and 'ByteString').
 newtype LHashMap k v = LHashMap { unLHashMap :: LHashMap.HashMap k v }
-    deriving (Read, Show, Typeable, Generic, Functor, Foldable, Traversable, Eq, Data, Semigroup, Monoid, NFData, Hashable)
+    deriving (Read, Show, Typeable, Generic, Functor, Foldable, Traversable, Eq, Data, Semigroup, Monoid, NFData)
 
 type HashSet = HashSet.HashSet
 
@@ -1523,7 +1522,7 @@ class DictLike m k where
     -- | Delete by key
     delete :: k -> m k v -> m k v
     -- | Modify an element at a key
-    update :: k -> (v -> Maybe v) -> m k v -> m k v
+    adjust :: k -> (v -> v) -> m k v -> m k v
     -- | Convert to an association list (list of key/value pairs)
     pairs :: m k v -> [(k, v)]
     -- | Convert from an association list (list of key/value pairs)
@@ -1543,7 +1542,7 @@ class DictLike m k where
 instance Eq k => DictLike AList k where
     insert k v (AList xs) = AList $ (k,v):xs
     delete k (AList xs) = AList $ filter ((/= k) . fst) xs
-    update k f (AList xs) = AList [ (k, fromMaybe v $ f v) | (k, v) <- xs ]
+    adjust k f (AList xs) = AList [ (k', if k == k' then f v else v) | (k', v) <- xs ]
     pairs = unAList
     fromPairs = AList
     singletonMap k v = AList [(k, v)]
@@ -1611,7 +1610,7 @@ instance (Eq k, Hashable k) => Lookup (HashMap.HashMap k) k where
 instance (Eq k, Hashable k) => DictLike HashMap.HashMap k where
     insert = HashMap.insert
     delete = HashMap.delete
-    update = flip HashMap.update
+    adjust = flip HashMap.adjust
     pairs = HashMap.toList
     fromPairs = HashMap.fromList
     keys = HashMap.keys
@@ -1636,7 +1635,7 @@ instance (Eq k, Ord k) => Lookup (Map.Map k) k where
 instance (Eq k, Ord k) => DictLike Map.Map k where
     insert = Map.insert
     delete = Map.delete
-    update = flip Map.update
+    adjust = flip Map.adjust
     pairs = Map.toList
     fromPairs = Map.fromList
     keys = Map.keys
@@ -1661,7 +1660,7 @@ overLHashMap f = LHashMap . f . unLHashMap
 instance (Eq k, Hashable k) => DictLike LHashMap k where
     insert k v = overLHashMap $ LHashMap.insert k v
     delete k = overLHashMap $ LHashMap.delete k
-    update k f = overLHashMap $ LHashMap.update f k
+    adjust k f = overLHashMap $ LHashMap.adjust f k
     pairs = LHashMap.toList . unLHashMap
     fromPairs = LHashMap . LHashMap.fromList
     keys = LHashMap.keys . unLHashMap
