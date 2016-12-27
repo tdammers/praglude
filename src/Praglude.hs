@@ -1038,7 +1038,6 @@ module Praglude
 , replaceBaseName
 , replaceDirectory
 , replaceExtension
-, replaceExtensions
 , replaceFileName
 , searchPathSeparator
 , splitDirectories
@@ -1048,7 +1047,6 @@ module Praglude
 , splitFileName
 , splitPath
 , splitSearchPath
-, stripExtension
 , takeBaseName
 , takeDirectory
 , takeDrive
