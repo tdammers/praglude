@@ -903,7 +903,6 @@ module Praglude
 -- * Painless String Types
 , s
 , ToString (..)
-, FromString
 , IsString (..)
 
 , Text
@@ -1326,19 +1325,19 @@ append = mappend
 concat :: Monoid a => [a] -> a
 concat = mconcat
 
-lines :: (FromString a, ToString a) => a -> [a]
+lines :: (IsString a, ToString a) => a -> [a]
 lines = map s . Prelude.lines . s
 
-words :: (FromString a, ToString a) => a -> [a]
+words :: (IsString a, ToString a) => a -> [a]
 words = map s . Prelude.words . s
 
-trim :: (FromString a, ToString a) => a -> a
+trim :: (IsString a, ToString a) => a -> a
 trim = ltrim . rtrim
 
-ltrim :: (FromString a, ToString a) => a -> a
+ltrim :: (IsString a, ToString a) => a -> a
 ltrim = s . dropWhile isSpace . s
 
-rtrim :: (FromString a, ToString a) => a -> a
+rtrim :: (IsString a, ToString a) => a -> a
 rtrim = s . List.dropWhileEnd isSpace . s
 
 {-#RULES "Text.trim" trim = Text.strip #-}
