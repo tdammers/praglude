@@ -953,7 +953,7 @@ module Praglude
 , readLitChar
 
 -- * String Case Conversions
-, kebab, snake, pascal
+, kebab, snake, pascal, quietSnake, screamingSnake
 
 -- * I/O
 , stderr
